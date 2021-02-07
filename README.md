@@ -57,27 +57,28 @@ git clone https://github.com/gotmax/feedbin-docker.git
 ### 4. Database Setup
 
 ```sh
-docker-compose up -d feedbin-postgres feedbin-web && docker exec -ti feedbin-web rake db:setup
+docker-compose up -d feedbin-postgres feedbin-web minio && docker exec -ti feedbin-web rake db:setup
 ```
 
 If you get an error message here, please double check your .env file and try checking the logs for `feedbin-web` or feedbin-postgres by running `docker logs -f feedbin-web` or `docker logs -f feedbin-postgres`.
 
 ### 5. Minio Setup
 
-Launch everything:
-
-```sh
-docker-compose up -d
-```
-
-You can check if everything is going well with `docker-compose logs -f` or `docker-compose ps`.
-
 Go to `minio.feedbin.domain.tld`, login with your keys. Then:
 
 * Create a bucket named feedbin with the button in the bottom right hand corner.
 
 ### 5. Finish Up
-Now go to `feedbin.domain.tld` and create a new account. You're set!
+Now that you've finished the basic setup, you can launch the rest of the containers, by running:
+
+```sh
+
+docker-compose up -d
+
+```
+Once the containers are up, you can check if everything is going well with `docker-compose logs -f` or `docker-compose ps`.
+
+Then, go to `feedbin.domain.tld` and create a new account. You're set!
 
 You can make yourself an admin to manage users and to view the Sidekiq web interface.
 
