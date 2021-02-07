@@ -44,7 +44,7 @@ git clone https://github.com/gotmax/feedbin-docker.git
 
 ### 2. Edit .env file
 * Copy `.env.example` to `.env`.
-* Fill in `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`, `CAMO_KEY`, `SECRET_KEY_BASE`, and `POSTGRESS_PASSWORD`. I recommend randomly generating seperate alphanumeric passwords for each of these values. 
+* Fill in `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`, `CAMO_KEY`, `SECRET_KEY_BASE`, `POSTGRESS_PASSWORD`, and `EXTRACT_SECRET`. I recommend randomly generating seperate alphanumeric passwords for each of these values. 
 * Then, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be filled with the same values as `MINIO_ACCESS_KEY`and `MINIO_SECRET_KEY`, respectively.
 * Replace all occurences of `domain.tld` with the domain you plan on using.
 * Fill in email server details for automated Feedbin Emails. I have my own email server, but if you don't, there are several options to obtain an email address with SMTP access.
@@ -89,7 +89,9 @@ docker-compose exec feedbin-web rake feedbin:make_admin[youremail@domain.tld]
 Once you're done, you can prevent new users from registering by [modifying cour Caddy config](https://github.com/angristan/feedbin-docker/issues/3#issuecomment-700286769).
 
 ### 6. Maintenance
-I recommend doing this each time you update your system. In order to do this, run this command:
+I recommend updating your container images each time you update your system. In order to do this, run this command:
 ``` sh
 docker-compose pull && docker-compose build --no-cache && docker-compose up -d
 ```
+
+I am working on setting up CI so the containers will automatically build each time a commit is pushed to this repo, so users don't need to build the cotainers themselves.
