@@ -36,11 +36,11 @@ I recommend a server with **more than 2 GB of RAM**. Otherwise you will likely h
 Clone the repo:
 
 ```sh
-git clone https://github.com/angristan/feedbin-docker.git
+git clone https://github.com/gotmax/feedbin-docker.git
 ```
 
 * Copy `.env.example` to `.env` and fill **ALL** the variables
-* Copy `docker-compose-example.yml` to `docker-compose.yml`. If you want to disable a service this is the place.
+* Copy `docker-compose.yml.example` to `docker-compose.yml`. If you want to disable a service this is the place.
 * Copy `caddy/example.Caddyfile` to `caddy/Caddyfile` and update the domains.
 
 Run the database migrations:
