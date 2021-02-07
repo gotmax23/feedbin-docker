@@ -6,7 +6,7 @@ services:
     container_name: feedbin-caddy
     image: abiosoft/caddy:1.0.3
     volumes:
-      - feedbin_caddy:/etc/ssl/caddy
+      - ./volumes/feedbin_caddy:/etc/ssl/caddy
       - ./caddy/Caddyfile:/etc/Caddyfile:ro
     env_file:
      - ./.env
@@ -20,7 +20,7 @@ services:
     container_name: feedbin-minio
     image: minio/minio
     volumes:
-    - feedbin_minio:/data
+    - ./volumes/feedbin_minio:/data
     env_file:
      - ./.env
     command: server /data
@@ -59,7 +59,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9200"]
     volumes:
-      - feedbin_elasticsearch:/usr/share/elasticsearch/data
+      - ./volumes/feedbin_elasticsearch:/usr/share/elasticsearch/data
     environment:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -108,7 +108,7 @@ services:
     image: redis:5
     command: "redis-server --appendonly yes"
     volumes:
-      - feedbin_redis:/data
+      - ./volumes/feedbin_redis:/data
     restart: always
 
   feedbin-postgres:
@@ -117,7 +117,7 @@ services:
     env_file:
      - ./.env
     volumes:
-      - feedbin_db:/var/lib/postgresql/data
+      - ./volumes/feedbin_db:/var/lib/postgresql/data
     restart: always
     mem_limit: 512m
 
