@@ -1,7 +1,8 @@
 # Feedbin in Docker
-## Info Anout This Fork
+## Info About This Fork
 
 This is a fork of [angristan/feedbin-docker](https://github.com/angristan/feedbin-docker) with a couple minor changes and fixes, as well as clearer documentaiion. I am in no way an "expert" but I'm using this as a learning oppurtunity. I hope this helps anyone trying to selfhost Feedbin!
+
 ----
 Self-host [Feedbin](https://github.com/feedbin/feedbin) with Docker. Feedbin is a web based RSS reader. It's an open-source Ruby on Rails software.
 
