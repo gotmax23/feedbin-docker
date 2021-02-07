@@ -1,15 +1,9 @@
-version: '2.2'
-
-volumes:
-  feedbin_redis:
-  feedbin_db:
-  feedbin_elasticsearch:
-  feedbin_minio:
-  feedbin_caddy:
-
+---
+version: '3'
 services:
 
   feedbin-caddy:
+    container_name: feedbin-caddy
     image: abiosoft/caddy:1.0.3
     volumes:
       - feedbin_caddy:/etc/ssl/caddy
@@ -23,6 +17,7 @@ services:
     restart: always
 
   feedbin-minio:
+    container_name: feedbin-minio
     image: minio/minio
     volumes:
     - feedbin_minio:/data
@@ -34,6 +29,7 @@ services:
     restart: always
 
   feedbin-web:
+    container_name: feedbin-web
     build:
       context: .
       args:
@@ -49,6 +45,7 @@ services:
     mem_limit: 512m
 
   feedbin-workers:
+    container_name: feedbin-workers
     build: .
     env_file:
      - ./.env
@@ -57,6 +54,7 @@ services:
     mem_limit: 512m
 
   feedbin-elasticsearch:
+    container_name: feedbin-elasticsearch
     image: elasticsearch:2.4
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9200"]
@@ -74,6 +72,7 @@ services:
     restart: always
 
   feedbin-refresher:
+    container_name: feedbin-refresher
     build: ./feedbin-refresher
     env_file:
      - ./.env
@@ -81,6 +80,7 @@ services:
     mem_limit: 512m
 
   feedbin-image:
+    container_name: feedbin-image
     build: ./feedbin-image
     env_file:
       - ./.env
@@ -88,6 +88,7 @@ services:
     mem_limit: 512m
 
   camo:
+    container_name: feedbin-camo
     image: increments/camo
     environment:
       - PORT=8081
@@ -98,10 +99,12 @@ services:
     restart: always
 
   feedbin-memcached:
+    container_name: feedbin-memcached
     image: memcached:1.5
     restart: always
 
   feedbin-redis:
+    container_name: feedbin-redis
     image: redis:5
     command: "redis-server --appendonly yes"
     volumes:
@@ -109,6 +112,7 @@ services:
     restart: always
 
   feedbin-postgres:
+    container_name: feedbin-postgress
     image: postgres:13
     env_file:
      - ./.env
@@ -118,6 +122,7 @@ services:
     mem_limit: 512m
 
   feedbin-extract:
+    container_name: feedbin-extract
     build:
       context: ./feedbin-extract
       args:
