@@ -1,5 +1,8 @@
 # Feedbin in Docker
+## Info Anout This Fork
 
+This is a fork of [angristan/feedbin-docker](https://github.com/angristan/feedbin-docker) with a couple minor changes and fixes, as well as clearer documentaiion. I am in no way an "expert" but I'm using this as a learning oppurtunity. I hope this helps anyone trying to selfhost Feedbin!
+----
 Self-host [Feedbin](https://github.com/feedbin/feedbin) with Docker. Feedbin is a web based RSS reader. It's an open-source Ruby on Rails software.
 
 Feedbin's main goal is not to be easily self-hostable, and it was quite hard getting all of the services to work. During the process of creating `feedbin-docker`, I made [a few contributions to the upstream project](https://github.com/feedbin/feedbin/commits?author=angristan) to make it self-hostable ready. Other have taken other approaches by forking it, but all the projects I found on GitHub were abandonned and weren't working anymore.
@@ -33,23 +36,32 @@ You can also replace `caddy` with another reverse proxy, but caddy is really han
 
 I recommend a server with **more than 2 GB of RAM**. Otherwise you will likely have OOM kills.
 
-Clone the repo:
+### 1. Clone the repo:
 
 ```sh
 git clone https://github.com/gotmax/feedbin-docker.git
 ```
 
-* Copy `.env.example` to `.env` and fill **ALL** the variables
+### 2. Edit .env file
+* Copy `.env.example` to `.env`.
+* Fill in `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`, `CAMO_KEY`, `SECRET_KEY_BASE`, and `POSTGRESS_PASSWORD`. I recommend randomly generating seperate alphanumeric passwords for each of these values. 
+* Then, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be filled with the same values as `MINIO_ACCESS_KEY`and `MINIO_SECRET_KEY`, respectively.
+* Replace all occurences of `domain.tld` with the domain you plan on using.
+* Fill in email server details for automated Feedbin Emails. I have my own email server, but if you don't, there are several options to obtain an email address with SMTP access.
+
+### 3. Copy docker-compose and Caddyfile examples to proper locations
 * Copy `docker-compose.yml.example` to `docker-compose.yml`. If you want to disable a service this is the place.
 * Copy `caddy/example.Caddyfile` to `caddy/Caddyfile` and update the domains.
 
-Run the database migrations:
+### 4. Database Setup
 
 ```sh
 docker-compose up -d feedbin-postgres feedbin-web && docker exec -ti feedbin-web rake db:setup
 ```
 
 If you get an error message here, please double check your .env file and try checking the logs for `feedbin-web` or feedbin-postgres by running `docker logs -f feedbin-web` or `docker logs -f feedbin-postgres`.
+
+### 5. Minio Setup
 
 Launch everything:
 
@@ -61,14 +73,9 @@ You can check if everything is going well with `docker-compose logs -f` or `dock
 
 Go to `minio.feedbin.domain.tld`, login with your keys. Then:
 
-* Create a bucket with the button in the bottom right hand corner.
-* Make the bucket public:
-  * On the left sidebar, clic on the 3 dots on thee bucket line
-  * Select add policy
-  * Leave prefix empty (or `*`) and `Read Only` and then select `Add`.
+* Create a bucket named feedbin with the button in the bottom right hand corner.
 
-Your bucket is ready.
-
+### 5. Finish Up
 Now go to `feedbin.domain.tld` and create a new account. You're set!
 
 You can make yourself an admin to manage users and to view the Sidekiq web interface.
@@ -80,3 +87,9 @@ docker-compose exec feedbin-web rake feedbin:make_admin[youremail@domain.tld]
 ```
 
 Once you're done, you can prevent new users from registering by [modifying cour Caddy config](https://github.com/angristan/feedbin-docker/issues/3#issuecomment-700286769).
+
+### 6. Maintenance
+I recommend doing this each time you update your system. In order to do this, run this command:
+``` sh
+docker-compose pull && docker-compose build --no-cache && docker-compose up -d
+```
