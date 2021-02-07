@@ -46,8 +46,10 @@ git clone https://github.com/gotmax/feedbin-docker.git
 Run the database migrations:
 
 ```sh
-docker-compose run --rm feedbin-web rake db:setup
+docker-compose up -d feedbin-postgres feedbin-web && docker exec -ti feedbin-web rake db:setup
 ```
+
+If you get an error message here, please double check your .env file and try checking the logs for `feedbin-web` or feedbin-postgres by running `docker logs -f feedbin-web` or `docker logs -f feedbin-postgres`.
 
 Launch everything:
 
