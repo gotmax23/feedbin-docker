@@ -50,7 +50,7 @@ git clone https://github.com/gotmax/feedbin-docker.git
 * Fill in email server details for automated Feedbin Emails. I have my own email server, but if you don't, there are several options to obtain an email address with SMTP access.
 
 ### 3. Copy docker-compose and Caddyfile examples to proper locations
-* Copy `docker-compose.yml.example` to `docker-compose.yml`. If you want to disable a service this is the place.
+* Copy `docker-compose.yml.example` to `docker-compose.yml`. If you want to disable a service this is the place. Also run `mkdir volumes` to create the folder where the Docker volumes are mapped to by default.
 * Copy `caddy/example.Caddyfile` to `caddy/Caddyfile` and update the domains.
 
 ### 4. Database Setup
