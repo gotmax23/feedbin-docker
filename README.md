@@ -12,7 +12,7 @@ That being said, contributions are always welcome and I do think this is one of 
 ----
 Self-host [Feedbin](https://github.com/feedbin/feedbin) with Docker. Feedbin is a web based RSS reader. It's an open-source Ruby on Rails software.
 
-Feedbin's main goal is not to be easily self-hostable, and it was quite hard getting all of the services to work. During the process of creating `feedbin-docker`, I made [a few contributions to the upstream project](https://github.com/feedbin/feedbin/commits?author=angristan) to make it self-hostable ready. Other have taken other approaches by forking it, but all the projects I found on GitHub were abandonned and weren't working anymore.
+Feedbin's main goal is not to be easily self-hostable, and it was quite hard getting all of the services to work. During the process of creating `feedbin-docker`, I made [a few contributions to the upstream project](https://github.com/feedbin/feedbin/commits?author=angristan) to make it self-hostable. Other have taken other approaches by forking it, but all the projects I found on GitHub were abandonned and weren't working anymore.
 
 I chose to run it in Docker because of all the services required to run Feedbin.
 
@@ -55,7 +55,7 @@ git clone https://github.com/gotmax/feedbin-docker.git
 * Fill in `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`, `CAMO_KEY`, `SECRET_KEY_BASE`, `POSTGRESS_PASSWORD`, and `EXTRACT_SECRET`. I recommend randomly generating seperate alphanumeric passwords for each of these values. Having secure passwords is especially crucial as this installation is exposed to the internet.
 * Then, you should fill `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` with the same values as `MINIO_ACCESS_KEY`and `MINIO_SECRET_KEY`, respectively.
 * Replace all occurences of `domain.tld` with the domain you plan on using.
-* Fill in email server details for automated Feedbin Emails. I have my own email server, but if you don't, there are several options to obtain an email address with SMTP access.
+* Fill in email server details for automated Feedbin emails. I have my own email server, but if you don't, there are several options to obtain an email address with SMTP access.
 
 ### 2. Copy docker-compose and Caddyfile examples to proper locations
 * Copy `docker-compose.yml.example` to `docker-compose.yml`. If you want to disable a service this is the place. Also run `mkdir volumes` to create the folder where the Docker volumes are stored to by default.
